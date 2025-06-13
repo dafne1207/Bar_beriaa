@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Extras opcionales</title>
+</head>
+<body style="background: url('imagenes/fondo-barberos.jpeg') no-repeat center center fixed; background-size: cover; font-family: Arial; color: white; padding: 30px; text-align: center;">
+
+  <h1 style="color: gold; font-size: 40px;">✨ Extras para tu experiencia VIP</h1>
+  <p>Selecciona todo lo que quieras añadir a tu servicio</p>
+
+  <form action="ticketvip.html" method="get" onsubmit="guardarExtras()">
+
+    <h2 style="color: gold;">🛁 Servicios adicionales</h2>
+    <label><input type="checkbox" name="extras" value="Toalla caliente" onchange="actualizarCarrito()"> Toalla caliente</label><br>
+    <label><input type="checkbox" name="extras" value="Rasurado de barba y ceja" onchange="actualizarCarrito()"> Rasurado de barba y ceja</label><br>
+    <label><input type="checkbox" name="extras" value="Mascarilla facial" onchange="actualizarCarrito()"> Mascarilla facial</label><br>
+    <label><input type="checkbox" name="extras" value="Masaje facial" onchange="actualizarCarrito()"> Masaje facial</label><br>
+    <label><input type="checkbox" name="extras" value="Cera en nariz/cejas" onchange="actualizarCarrito()"> Cera en nariz/cejas</label><br>
+    <label><input type="checkbox" name="extras" value="Toque con navaja" onchange="actualizarCarrito()"> Toque con navaja</label><br>
+
+    <h2 style="color: gold">🍹 Bebidas (elige cuántas deseas)</h2>
+    <label>Cerveza: <input type="number" name="Cerveza" min="0" value="0" onchange="actualizarCarrito()"></label><br>
+    <label>Whisky: <input type="number" name="Whisky" min="0" value="0" onchange="actualizarCarrito()"></label><br>
+    <label>Mojito: <input type="number" name="Mojito" min="0" value="0" onchange="actualizarCarrito()"></label><br>
+    <label>Refresco: <input type="number" name="Refresco" min="0" value="0" onchange="actualizarCarrito()"></label><br>
+    <label>Agua mineral: <input type="number" name="Agua mineral" min="0" value="0" onchange="actualizarCarrito()"></label><br>
+
+    <h2 style="color: gold;">🧴 Productos de Barber Shop</h2>
+    <label>Gel: <input type="number" name="Gel" min="0" value="0" onchange="actualizarCarrito()"></label><br>
+    <label>Cera: <input type="number" name="Cera" min="0" value="0" onchange="actualizarCarrito()"></label><br>
+    <label>Jabón facial: <input type="number" name="Jabón facial" min="0" value="0" onchange="actualizarCarrito()"></label><br>
+    <label>Shampoo: <input type="number" name="Shampoo" min="0" value="0" onchange="actualizarCarrito()"></label><br>
+    <label>Aceite para barba: <input type="number" name="Aceite para barba" min="0" value="0" onchange="actualizarCarrito()"></label><br><br>
+
+    <div style="margin: 30px auto; background-color: rgba(0, 0, 0, 0.6); padding: 20px; width: 60%; border-radius: 15px; box-shadow: 0 0 15px black;">
+      <h3 style="color: gold;">🛒 Tu carrito de selección:</h3>
+      <ul id="carrito" style="list-style-type: none; font-size: 18px;"></ul>
+    </div>
+
+    <button type="submit" style="padding: 12px 30px; font-size: 18px; font-weight: bold; border: none; border-radius: 10px; background-color: gold; color: black; cursor: pointer;">
+      GENERAR TICKET
+    </button>
+  </form>
+
+  <script>
+    function actualizarCarrito() {
+      let carrito = document.getElementById("carrito");
+      carrito.innerHTML = "";
+
+      let extras = document.querySelectorAll('input[type="checkbox"]:checked');
+      extras.forEach(extra => {
+        let li = document.createElement("li");
+        li.textContent = "✔️ " + extra.value;
+        carrito.appendChild(li);
+      });
+
+      let cantidades = document.querySelectorAll('input[type="number"]');
+      cantidades.forEach(item => {
+        if (parseInt(item.value) > 0) {
+          let li = document.createElement("li");
+          li.textContent = `🧃 ${item.name} x${item.value}`;
+          carrito.appendChild(li);
+        }
+      });
+    }
+
+    function guardarExtras() {
+      let extras = [];
+      let extrasSeleccionados = document.querySelectorAll('input[type="checkbox"]:checked');
+      extrasSeleccionados.forEach(extra => extras.push(extra.value));
+
+      let cantidades = document.querySelectorAll('input[type="number"]');
+      cantidades.forEach(item => {
+        if (parseInt(item.value) > 0) {
+          extras.push(`${item.name} x${item.value}`);
+        }
+      });
+
+      localStorage.setItem("extras", JSON.stringify(extras));
+    }
+  </script>
+
+</body>
+</html>
